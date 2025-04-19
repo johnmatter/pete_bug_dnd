@@ -1,0 +1,13 @@
+{
+  "name": "Pete",
+  "class": "Bard",
+  "level": "1",
+  "stats": {
+    "STR": 10,
+    "DEX": 12,
+    "CON": 15,
+    "INT": 9,
+    "WIS": 8,
+    "CHA": 20
+  }
+}

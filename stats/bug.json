@@ -1,0 +1,13 @@
+{
+  "name": "Bug",
+  "class": "Rogue",
+  "level": "1",
+  "stats": {
+    "STR": 8,
+    "DEX": 12,
+    "CON": 15,
+    "INT": 7,
+    "WIS": 7,
+    "CHA": 20
+  }
+}
