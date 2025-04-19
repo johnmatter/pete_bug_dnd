@@ -11,23 +11,24 @@ aspect = 16/9
 width = 1920
 height = width / aspect
 
-# pm = PaletteManager().load_by_index(15)
-# pm = PaletteManager().load_by_index(19)
-pm = (PaletteManager().load_by_index(54).shuffle(0).rotate(0))
-pm = (PaletteManager().load_by_index(
-    66)
-    .shuffle(
-    0)
-    .rotate(
-    3)
-)
+characters = [
+  "bug",
+  "pete",
+]
+character = characters[1]
+
+match character:
+  case "bug":
+    pm = PaletteManager().load_by_index(15).shuffle(7).rotate(2)
+  case "pete":
+    pm = PaletteManager().load_by_index(54).shuffle(0).rotate(0)
+
 # glob in fonts/vf/{style} to get all the variable fonts
 deco_fonts = { i: f for i, f in enumerate(glob.glob("fonts/vf/deco/*.ttf")) }
 sans_fonts = { i: f for i, f in enumerate(glob.glob("fonts/vf/sans/*.ttf")) }
 
 # load json file
-character_json = "stats/bug.json"
-# character_json = "stats/pete.json"
+character_json = f"stats/{character}.json"
 character = json.load(open(character_json))
 print(character)
 
@@ -66,7 +67,7 @@ def scratch(f:Frame):
       .ch(potrace(f.a.r.inset(-1000)))
       .scale(0.65, 0.60)
       .align(s_main["a"])
-      .f(pm[1])
+      .f(pm[2])
       .translate(-20, 14)
     )
     composition += stat_block_frame
@@ -156,7 +157,7 @@ def scratch(f:Frame):
       .ch(potrace(f.a.r.inset(-1000)))
       .scale(0.45)
       .align(s_main["c"])
-      .fssw(pm[1],pm[1],1)
+      .fssw(pm[2],pm[1],1)
       .yalign(character_class.bounds(), "mdy")
     )
     portrait_frame_fill = (P()
