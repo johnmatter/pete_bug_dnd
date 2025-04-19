@@ -1,13 +1,13 @@
 {
   "name": "Bug",
-  "class": "Druid",
-  "level": "2",
+  "class": ["Druid"],
+  "level": [2],
   "stats": {
     "STR": 8,
     "DEX": 12,
     "CON": 15,
     "INT": 7,
-    "WIS": 7,
+    "WIS": 9,
     "CHA": 20
   }
 }

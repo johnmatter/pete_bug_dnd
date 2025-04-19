@@ -1,13 +1,13 @@
 {
   "name": "Pete",
-  "class": "Bard",
-  "level": "1",
+  "class": ["Bard", "Sorcerer"],
+  "level": [1, 1],
   "stats": {
     "STR": 10,
     "DEX": 12,
     "CON": 15,
-    "INT": 9,
+    "INT": 11,
     "WIS": 8,
-    "CHA": 20
+    "CHA": 15
   }
 }

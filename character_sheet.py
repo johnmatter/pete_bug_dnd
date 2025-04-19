@@ -19,9 +19,12 @@ character = characters[1]
 
 match character:
   case "bug":
-    pm = PaletteManager().load_by_index(15).shuffle(7).rotate(2)
+    pm = PaletteManager().load_by_index(15).shuffle(2).rotate(0)
+    paper_filename = "/Users/matter/Downloads/gradient-color-grainy-textures-2023-11-27-05-33-48-utc/gradients/20.jpg" 
   case "pete":
     pm = PaletteManager().load_by_index(54).shuffle(0).rotate(0)
+    paper_filename = "/Users/matter/Downloads/gradient-color-grainy-textures-2023-11-27-05-33-48-utc/gradients/18.jpg" 
+
 
 # glob in fonts/vf/{style} to get all the variable fonts
 deco_fonts = { i: f for i, f in enumerate(glob.glob("fonts/vf/deco/*.ttf")) }
@@ -31,10 +34,6 @@ sans_fonts = { i: f for i, f in enumerate(glob.glob("fonts/vf/sans/*.ttf")) }
 character_json = f"stats/{character}.json"
 character = json.load(open(character_json))
 print(character)
-
-papers = { i: f for i, f in enumerate(glob.glob("media/paper/*")) }
-paper_filename = papers[6]
-paper_filename = "/Users/matter/Downloads/gradient-color-grainy-textures-2023-11-27-05-33-48-utc/gradients/20.jpg" 
 
 stat_frame_filename = "media/frame/a.png"
 portrait_frame_filename = "media/frame/c.png"
@@ -88,7 +87,7 @@ def scratch(f:Frame):
               wght=0.3,
               wdth=1.0,
             )
-            .f(pm[3])
+            .f(pm[2])
             .align(s_stat_block[i], "C")
             .translate(0, 55)
             ,
@@ -127,19 +126,24 @@ def scratch(f:Frame):
     composition += name
 
     # class
+    print(character["class"])
     character_class = (
-        StSt(f"{character['class']} lvl {character['level']}", deco_fonts[1], 100,
-          wght=0.29,
-          fit=s_profile["b"].r.w*1.30,
-          tu=51,
-        )
+        P([
+            StSt(f"{c} lvl {l}", deco_fonts[1], 60,
+              wght=0.29,
+              fit=s_profile["b"].r.w*1.30,
+              tu=51,
+            )
+            for c,l in zip(character["class"], character["level"])
+        ])
+        .stack("50%")
         .f(pm[-2])
         .align(s_profile["b"], "C")
     )
     composition += character_class
 
     # blurb
-    lorem = TextLorem(srange=(5,6), prange=(5,5))
+    lorem = TextLorem(srange=(4,5), prange=(4,5))
     blurb = (
         StSt(lorem.paragraph(), sans_fonts[2], 37,
           wght=0.50,
@@ -156,7 +160,7 @@ def scratch(f:Frame):
       SkiaImage(portrait_frame_filename)
       .ch(potrace(f.a.r.inset(-1000)))
       .scale(0.45)
-      .align(s_main["c"])
+      .align(s_main["c"], "E")
       .fssw(pm[2],pm[1],1)
       .yalign(character_class.bounds(), "mdy")
     )
@@ -174,7 +178,7 @@ def scratch(f:Frame):
           wght=0.60,
         )
         .linebreak(portrait_frame.bounds().r.w*0.8)
-        .stack("100%")
+        .stack("80%")
         ,
 
         StSt(f' — {character["name"]}', sans_fonts[2], 32,
@@ -182,15 +186,16 @@ def scratch(f:Frame):
         )
         ])
         .xalign(portrait_frame.bounds().r, "E")
-        .stack("20%")
+        .stack()
         .f(pm[1])
         .align(portrait_frame.bounds().r.offset(0, -0.20*portrait_frame.bounds().r.h), "S")
         ,
     )
 
     #-------------------------------------------------------------------------
+
     # palette preview
-    composition += pm.preview(f.a.r.take(0.03, "E"), font_size=0)
+    # composition += pm.preview(f.a.r.take(0.03, "E"), font_size=0)
 
     composition = composition.ch(temp(0.00))
 
